@@ -64,8 +64,12 @@ namespace BeltpackRoamer
             foreach(var antenna in CurrentConfiguration.VirtualAntennaPorts.Values)
             {
                 string transceiverDetails = antenna.Label.TalkListen + " :" + antenna.Description;
-                transceiverList.Items.Add(transceiverDetails);
-                Transceivers.Add(transceiverDetails, antenna);
+
+                if (!Transceivers.ContainsKey(transceiverDetails))
+                {
+                    transceiverList.Items.Add(transceiverDetails);
+                    Transceivers.Add(transceiverDetails, antenna);
+                }
             }
         }
 
@@ -79,8 +83,11 @@ namespace BeltpackRoamer
                 if (role.AbsolutePortNumber >= 600)
                 {
                     string roleDetails = role.Label.TalkListen + " (" + role.Description + ")";
-                    Beltpacks.Add(roleDetails, role);
-                    beltpackRoleDropdown.Items.Add(roleDetails);
+                    if (!Beltpacks.ContainsKey(roleDetails))
+                    {
+                        Beltpacks.Add(roleDetails, role);
+                        beltpackRoleDropdown.Items.Add(roleDetails);
+                    }
                 }
             }
 
